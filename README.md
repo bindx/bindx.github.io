@@ -53,8 +53,8 @@ Bindx
 
 ```objc
  
+ - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     LinkedME* linkedme = [LinkedME getInstance];
-
     //获取跳转参数
     [linkedme initSessionWithLaunchOptions:launchOptions automaticallyDisplayDeepLinkController:NO deepLinkHandler:^(NSDictionary* params, NSError* error) {
         if (!error) {
@@ -69,4 +69,6 @@ Bindx
             NSLog(@"LinkedME failed init: %@", error);
         }
     }];
+    return YES;
+}
 ```
