@@ -42,3 +42,31 @@ Bindx
 - (IBAction)deleteAllSearchableItem{
     [LinkedME removeAllSearchItems];
 }```
+
+
+```objc
+//Universal Links 通用链接实现深度链接技术
+- (BOOL)application:(UIApplication*)application continueUserActivity:(NSUserActivity*)userActivity restorationHandler:(void (^)(NSArray*))restorationHandler{
+    return  [[LinkedME getInstance] continueUserActivity:userActivity];
+}
+```
+
+```objc
+ 
+    LinkedME* linkedme = [LinkedME getInstance];
+
+    //获取跳转参数
+    [linkedme initSessionWithLaunchOptions:launchOptions automaticallyDisplayDeepLinkController:NO deepLinkHandler:^(NSDictionary* params, NSError* error) {
+        if (!error) {
+            @try {
+                
+            } @catch (NSException *exception) {
+                
+            } @finally {
+                
+            }
+        } else {
+            NSLog(@"LinkedME failed init: %@", error);
+        }
+    }];
+```
