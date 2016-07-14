@@ -72,3 +72,34 @@ Bindx
     return YES;
 }
 ```
+
+
+```objc
+//创建短链
+-(void)addPara{
+    self.linkedUniversalObject = [[LMUniversalObject alloc] init];
+    self.linkedUniversalObject.title = title;//标题
+    LMLinkProperties *linkProperties = [[LMLinkProperties alloc] init];
+    linkProperties.channel = @"";//渠道(微信,微博,QQ,等...)
+    linkProperties.feature = @"Share";//特点
+    linkProperties.tags=@[@"LinkedME",@"Demo"];//标签
+    linkProperties.stage = @"Live";//阶段
+    [linkProperties addControlParam:@"View" withValue:arr[page][@"url"]];//页面唯一标识
+    [linkProperties addControlParam:@"LinkedME" withValue:@"Demo"];//Demo标识  
+    //开始请求短链
+    [self.linkedUniversalObject getShortUrlWithLinkProperties:linkProperties andCallback:^(NSString *url, NSError *err) {
+        if (url) {
+            NSLog(@"[LinkedME Info] SDK creates the url is:%@", url);
+            //拼接连接
+            [H5_LIVE_URL stringByAppendingString:arr[page][@"form"]];
+            [H5_LIVE_URL stringByAppendingString:@"?linkedme="];
+            H5_LIVE_URL = [NSString stringWithFormat:@"https://www.linkedme.cc/h5/%@?linkedme=",arr[page][@"form"]];
+            //前面是Html5页面,后面拼上深度链接https://xxxxx.xxx (html5 页面地址) ?linkedme=(深度链接)
+            //https://www.linkedme.cc/h5/feature?linkedme=https://lkme.cc/AfC/mj9H87tk7
+            LINKEDME_SHORT_URL = [H5_LIVE_URL stringByAppendingString:url];            
+        } else {
+            LINKEDME_SHORT_URL = H5_LIVE_URL;
+        }
+    }];
+}
+```
